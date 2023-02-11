@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="form">
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+        <div class="alert alert-primary" role="alert">
+            {{ message[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <form action="/" method="POST">
+        <input type="text" placeholder="Enter a city name" name="city_name" id="input-city">
+        <button type="submit" class="submit-button">Add</button>
+    </form>
+</div>
+{% if cities %}
+<div class="cards">
+    {% for city in cities %}
+     <div class="card {{ city['card_class'] }}">
+        <div class="delete-wrapper">
+            <form action="/delete/{{ city['_id'] }}" method="POST">
+                <input type="hidden" name="id" value="">
+                <button class="delete-button" type="submit">Delete</button>
+            </form>
+        </div>
+        <div class="degrees"><span>{{ city['temp'] }}<span class="celsius"> °C</span></span></div>
+        <div class="state">{{ city['state'] }}</div>
+        <div class="empty"></div>
+        <div class="city">{{ city['city'] }}</div>
+    </div>
+    {% endfor %}
+{% endif %}
+</div>
+{% endblock %}
